@@ -38,7 +38,14 @@ public class ConnectedClient implements Runnable{
                     if(mess.getSender().equals("Tir")){
                         //RECEPTION D'UN TIR
                         System.out.println("TIR");
-                        server.game.tirer(server.game.position, server.game.barillet);
+                        if(id == server.game.tour){
+                            server.game.tirer(server.game.position, server.game.barillet);
+                            server.game.changeTour();
+                        }
+                        else{
+                            System.out.println("C PAS TON TOUR C LE TOUR DE " + server.game.tour);
+                        }
+
                     }
                     else{
                         mess.setSender(String.valueOf(id));

@@ -6,10 +6,12 @@ public class Game {
     int position;
     boolean[] barillet;
     boolean estVivant;
+    int tour;
 
     Game(){
         position = 0;
         estVivant = true;
+        tour = 0;
     }
 
     public void nouvellePartie(){
@@ -41,6 +43,15 @@ public class Game {
         else{
             System.out.println("click");
             this.position = this.position + 1;
+        }
+    }
+
+    public void changeTour(){
+        if(tour == 0){
+            tour = 1;
+        }
+        else if(tour == 1){
+            tour = 0;
         }
     }
 }
