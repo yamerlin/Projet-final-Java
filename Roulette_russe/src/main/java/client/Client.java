@@ -1,6 +1,7 @@
 package client;
 
 import common.Message;
+import server.Game;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,6 +37,7 @@ public class Client {
         Thread threadClientReceive = new Thread(new ClientReceive(this, this.socket));
         threadClientReceive.start();
 
+        Joueur joueur = new Joueur();
     }
 
     public void disconnectedServer(){
@@ -63,7 +65,6 @@ public class Client {
             this.out.flush();
         }
         catch (Exception e){
-
         }
     }
 }

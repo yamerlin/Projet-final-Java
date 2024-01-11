@@ -86,6 +86,7 @@ public class ClientPanel extends Parent {
         clearBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 textToSend.setText("");
             }
         });

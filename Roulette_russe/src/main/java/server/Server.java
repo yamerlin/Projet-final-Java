@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Server {
     private int port;
+    Game game;
     private ArrayList<ConnectedClient> clients;
 
     public Server(int port) {
@@ -14,6 +15,10 @@ public class Server {
 
         Thread threadConnection = new Thread(new Connection(this));
         threadConnection.start();
+
+        game = new Game();
+        game.nouvellePartie();
+        game.initBarillet();
     }
 
     public int getPort() {
@@ -44,6 +49,18 @@ public class Server {
         for (ConnectedClient client : clients) {
             if (client.getId() != id) {
                 client.sendMessage(mess);
+                System.out.println("TIR");
+
+                game.tirer(game.position, game.barillet);
+            }
+        }
+    }
+
+    public void tirer(Message mess, int id){
+        for (ConnectedClient client : clients) {
+            if (client.getId() != id) {
+                client.sendMessage(mess);
+                System.out.println("TIR");
             }
         }
     }

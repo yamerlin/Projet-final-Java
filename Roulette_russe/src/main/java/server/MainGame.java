@@ -1,10 +1,9 @@
-package game;
+/* package server;
 
-import client.Client;
 import java.util.Scanner;
 
 public class MainGame {
-    public static void main(String[] args) {
+    public void mainGame() {
         System.out.println("Hello world !");
 
         Game game = new Game();
@@ -18,4 +17,4 @@ public class MainGame {
 
         System.out.println("Fin de partie");
     }
-}
+}*/
