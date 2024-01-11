@@ -5,13 +5,15 @@ public class Game {
     int difficulté;
     int position;
     boolean[] barillet;
-    boolean estVivant;
     int tour;
+    boolean joueur1Vivant;
+    boolean joueur2Vivant;
 
     Game(){
         position = 0;
-        estVivant = true;
         tour = 0;
+        joueur1Vivant = true;
+        joueur2Vivant = true;
     }
 
     public void nouvellePartie(){
@@ -38,7 +40,16 @@ public class Game {
     public void tirer(int position, boolean[] barillet){
         if(barillet[position] == true){
             System.out.println("BAVAVANG");
-            estVivant = false;
+            if (tour == 0){
+                joueur1Vivant = false;
+                System.out.println("Mort du joueur 1");
+                System.out.println("Fin de partie");
+            }
+            else if(tour == 1){
+                joueur2Vivant = false;
+                System.out.println("Mort du joueur 2");
+                System.out.println("Fin de partie");
+            }
         }
         else{
             System.out.println("click");

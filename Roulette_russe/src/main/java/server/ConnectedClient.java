@@ -37,13 +37,16 @@ public class ConnectedClient implements Runnable{
                 if (mess != null){
                     if(mess.getSender().equals("Tir")){
                         //RECEPTION D'UN TIR
-                        System.out.println("TIR");
-                        if(id == server.game.tour){
+                        if(server.game.joueur1Vivant && server.game.joueur2Vivant && id == server.game.tour){
+                            System.out.println("TIR");
                             server.game.tirer(server.game.position, server.game.barillet);
                             server.game.changeTour();
                         }
-                        else{
-                            System.out.println("C PAS TON TOUR C LE TOUR DE " + server.game.tour);
+                        else if(server.game.joueur1Vivant && server.game.joueur2Vivant && id != server.game.tour){
+                            System.out.println("Ce n'est pas ton tour c'est le tour du joueur " + server.game.tour);
+                        }
+                        else if(server.game.joueur1Vivant || server.game.joueur2Vivant){
+                            System.out.println("La partie est terminée");
                         }
 
                     }

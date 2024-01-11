@@ -18,6 +18,7 @@ public class Client {
     private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    Joueur joueur;
 
     public Client(String address, int port){
         //view = new ClientPanel();
@@ -38,7 +39,7 @@ public class Client {
         Thread threadClientReceive = new Thread(new ClientReceive(this, this.socket));
         threadClientReceive.start();
 
-        Joueur joueur = new Joueur();
+        joueur = new Joueur();
     }
 
     public void disconnectedServer(){
@@ -55,8 +56,14 @@ public class Client {
     }
 
     public Message messageReceived(Message message){
-        System.out.println(message);
-        view.printNewMessage(message);
+        if(message.getSender().equals("Mort")){
+            joueur.estVivant = false;
+        }
+        else{
+            System.out.println(message);
+            view.printNewMessage(message);
+        }
+
         return message;
     }
 
