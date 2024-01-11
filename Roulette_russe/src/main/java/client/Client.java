@@ -27,6 +27,7 @@ public class Client {
         try{
             this.socket = new Socket(address, port);
             out = new ObjectOutputStream(socket.getOutputStream());
+
         }catch(Exception e){
             System.out.println(e);
         }

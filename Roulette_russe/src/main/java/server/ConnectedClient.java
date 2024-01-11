@@ -34,9 +34,16 @@ public class ConnectedClient implements Runnable{
             boolean isActive = true;
             while (isActive) {
                 Message mess = (Message) in.readObject();
-                mess.setSender(String.valueOf(id));
                 if (mess != null){
-                    server.broadcastMessage(mess, id);
+                    if(mess.getSender().equals("Tir")){
+                        //RECEPTION D'UN TIR
+                        System.out.println("TIR");
+                        server.game.tirer(server.game.position, server.game.barillet);
+                    }
+                    else{
+                        mess.setSender(String.valueOf(id));
+                        server.broadcastMessage(mess, id);
+                    }
                 }else {
                     server.disconnectedClient(this);
                     isActive = false;

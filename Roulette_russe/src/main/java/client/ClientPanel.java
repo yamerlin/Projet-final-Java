@@ -35,11 +35,13 @@ public class ClientPanel extends Parent {
         receivedText = new TextFlow();
         Button sendBtn = new Button();
         Button clearBtn = new Button();
+        Button tireBtn = new Button();
 
         this.getChildren().add(scrollReceivedText);
         this.getChildren().add(textToSend);
         this.getChildren().add(clearBtn);
         this.getChildren().add(sendBtn);
+        this.getChildren().add(tireBtn);
 
         scrollReceivedText.setLayoutX(100);
         scrollReceivedText.setLayoutY(50);
@@ -73,12 +75,27 @@ public class ClientPanel extends Parent {
         clearBtn.setVisible(true);
         clearBtn.setText("Clear");
 
+        tireBtn.setLayoutX(200);
+        tireBtn.setLayoutY(600);
+        tireBtn.setPrefWidth(200);
+        tireBtn.setPrefHeight(20);
+        tireBtn.setVisible(true);
+        tireBtn.setText("Tire");
+
         sendBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 Message mess = new Message("Moi", textToSend.getText());
                 printNewMessage(mess);
                 textToSend.setText("");
+                client.sendMessage(mess);
+            }
+        });
+
+        tireBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Message mess = new Message("Tir", "tir");
                 client.sendMessage(mess);
             }
         });

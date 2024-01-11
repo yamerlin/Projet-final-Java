@@ -49,18 +49,6 @@ public class Server {
         for (ConnectedClient client : clients) {
             if (client.getId() != id) {
                 client.sendMessage(mess);
-                System.out.println("TIR");
-
-                game.tirer(game.position, game.barillet);
-            }
-        }
-    }
-
-    public void tirer(Message mess, int id){
-        for (ConnectedClient client : clients) {
-            if (client.getId() != id) {
-                client.sendMessage(mess);
-                System.out.println("TIR");
             }
         }
     }
