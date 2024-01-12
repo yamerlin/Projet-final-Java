@@ -12,17 +12,23 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainGui extends Application {
+public class MainGui {
 
-    @Override
-    public void start(Stage stage) throws IOException {
+    public static Stage mainWindow;
+
+    public MainGui(){
+        this.creerFenetre();
+    }
+
+    public void creerFenetre() {
+        mainWindow = new Stage();
         ClientPanel clientPanel = new ClientPanel();
         Group root = new Group();
         root.getChildren().add(clientPanel);
-        Scene scene = new Scene(root, 600, 800);
-        stage.setTitle("Mon application");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(root, 1200, 800);
+        mainWindow.setTitle("Roulette russe");
+        mainWindow.setScene(scene);
+        mainWindow.show();
 
         Client client = new Client("127.0.0.1", 5000);
         client.setView(clientPanel);
@@ -31,8 +37,7 @@ public class MainGui extends Application {
     }
 
 
-
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Application.launch(MainGui.class, args);
-    }
+    }*/
 }
