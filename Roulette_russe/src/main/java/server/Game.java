@@ -8,30 +8,39 @@ public class Game {
     int tour;
     boolean joueur1Vivant;
     boolean joueur2Vivant;
+    int tailleBarillet;
 
-    Game(){
-        position = 0;
-        tour = 0;
-        joueur1Vivant = true;
-        joueur2Vivant = true;
+    public Game(int tailleBarillet){
+        nouvellePartie(tailleBarillet);
     }
 
-    public void nouvellePartie(){
+    public void nouvellePartie(int tailleBarillet){
         System.out.println("Nouvelle partie");
 
-        barillet = initBarillet();
+        this.position = 0;
+        this.tour = 0;
+        this.joueur1Vivant = true;
+        this.joueur2Vivant = true;
+
+        barillet = initBarillet(tailleBarillet);
 
         for(int i = 0; i < barillet.length; i++){
             System.out.println(barillet[i] + " ");
         }
     }
 
-    public boolean[] initBarillet(){
+    public boolean[] initBarillet(int tailleBarillet){
+        this.tailleBarillet = tailleBarillet;
+        boolean[] barillet = new boolean[tailleBarillet];
+
+        //Remplir le barillet de balle vide
+        for(int i = 0; i < barillet.length; i++){
+            barillet[i] = false;
+        }
+
+        //Mettre une balle pleine de manière aléatoire
         Random r = new Random();
-
-        boolean[] barillet = {false,false,false,false,false,false};
-
-        int x = r.nextInt(6);
+        int x = r.nextInt(barillet.length);
         barillet[x] = true;
 
         return barillet;

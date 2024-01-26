@@ -16,7 +16,7 @@ public class MainServer {
                 printUsage();
             } else {
                 Integer port =  Integer.valueOf(args[0]);
-                Server server = new Server(port);
+                Server server = new Server(port, 14);
             }
         } catch (Exception e1) {
             e1.printStackTrace();

@@ -16,10 +16,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import server.Game;
+import server.Server;
 
 public class Fenetre_de_parametres {
     public static Stage mainWindow;
     public int numImage;
+    public Server server;
 
     public Fenetre_de_parametres(){
         numImage = 0;
@@ -54,6 +57,33 @@ public class Fenetre_de_parametres {
         valider.setVisible(true);
         valider.setText("Valider");
         valider.setStyle("-fx-font: 24 Helvetica;");
+
+        valider.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent actionEvent) {
+                int tailleBarillet = 0;
+
+                //Paramètres de difficultés
+                if(numImage == 0){
+                    tailleBarillet = 8;
+                }
+                if(numImage == 1){
+                    tailleBarillet = 6;
+                }
+                if(numImage == 2){
+                    tailleBarillet = 5;
+                }
+
+                server = new Server(5000, tailleBarillet);
+
+                //game = new Game(tailleBarillet);
+
+                //Cacher la fenêtre de menu
+                mainWindow.hide();
+
+                //Instancier la fenêtre de jeu
+                new MainGui();
+            }
+        });
 
         //Image gun
         Image image1 = new Image(this.getClass().getResource("Niveau 1 SW R8/SW R8.png").toExternalForm());

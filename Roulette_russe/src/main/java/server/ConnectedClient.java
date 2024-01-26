@@ -1,5 +1,6 @@
 package server;
 
+import com.roulette.russe.roulette_russe.Fenetre_de_parametres;
 import common.Message;
 
 import java.io.ObjectInputStream;

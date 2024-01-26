@@ -9,16 +9,14 @@ public class Server {
     Game game;
     private ArrayList<ConnectedClient> clients;
 
-    public Server(int port) {
+    public Server(int port, int tailleBarillet) {
         this.port = port;
         this.clients = new ArrayList<ConnectedClient>();
 
         Thread threadConnection = new Thread(new Connection(this));
         threadConnection.start();
 
-        game = new Game();
-        game.nouvellePartie();
-        game.initBarillet();
+        game = new Game(tailleBarillet);
     }
 
     public int getPort() {
