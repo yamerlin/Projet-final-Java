@@ -22,7 +22,7 @@ public class Fenetre_de_parametres {
     public int numImage;
 
     public Fenetre_de_parametres(){
-        numImage = 1;
+        numImage = 0;
         this.creerFenetre();
     }
 
@@ -56,9 +56,17 @@ public class Fenetre_de_parametres {
         valider.setStyle("-fx-font: 24 Helvetica;");
 
         //Image gun
-        Image image = new Image(this.getClass().getResource("Niveau 1 SW R8/SW R8.png").toExternalForm());
-        ImageView imageView = new ImageView(image);
-        imageView.setImage(image);
+        Image image1 = new Image(this.getClass().getResource("Niveau 1 SW R8/SW R8.png").toExternalForm());
+        Image image2 = new Image(this.getClass().getResource("Niveau 2 Colt Anaconda/Colt Anaconda.png").toExternalForm());
+        Image image3 = new Image(this.getClass().getResource("Niveau 3 SW 500/SW 500.png").toExternalForm());
+
+        Image[] tableauImagesDesGun = new Image[3];
+        tableauImagesDesGun[0] = image1;
+        tableauImagesDesGun[1] = image2;
+        tableauImagesDesGun[2] = image3;
+
+        ImageView imageView = new ImageView();
+        imageView.setImage(tableauImagesDesGun[0]);
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(600);
 
@@ -72,14 +80,15 @@ public class Fenetre_de_parametres {
 
         gauche.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
-                if(numImage == 1){
-                    numImage = 3;
+                if(numImage == 0){
+                    numImage = 2;
                 }
                 else{
                     numImage = numImage - 1;
                 }
 
                 System.out.println(numImage);
+                imageView.setImage(tableauImagesDesGun[numImage]);
             }
         });
 
@@ -90,14 +99,15 @@ public class Fenetre_de_parametres {
 
         droite.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
-                if(numImage == 3){
-                    numImage = 1;
+                if(numImage == 2){
+                    numImage = 0;
                 }
                 else{
                     numImage = numImage + 1;
                 }
 
                 System.out.println(numImage);
+                imageView.setImage(tableauImagesDesGun[numImage]);
             }
         });
 
