@@ -46,16 +46,20 @@ public class Game {
         return barillet;
     }
 
-    public void tirer(int position, boolean[] barillet){
+    public boolean tirer(int position, boolean[] barillet){
+        boolean finDePartie = false;
+
         if(barillet[position] == true){
             System.out.println("BAVAVANG");
             if (tour == 0){
                 joueur1Vivant = false;
+                finDePartie = true;
                 System.out.println("Mort du joueur 1");
                 System.out.println("Fin de partie");
             }
             else if(tour == 1){
                 joueur2Vivant = false;
+                finDePartie = true;
                 System.out.println("Mort du joueur 2");
                 System.out.println("Fin de partie");
             }
@@ -64,6 +68,8 @@ public class Game {
             System.out.println("click");
             this.position = this.position + 1;
         }
+
+        return finDePartie;
     }
 
     public void changeTour(){

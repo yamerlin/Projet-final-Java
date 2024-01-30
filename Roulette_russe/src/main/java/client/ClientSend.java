@@ -1,5 +1,5 @@
-package client;
-
+//package client;
+/*
 import common.Message;
 
 import java.io.ObjectOutputStream;
@@ -30,4 +30,4 @@ public class ClientSend implements Runnable{
             }
         }
     }
-}
+}*/

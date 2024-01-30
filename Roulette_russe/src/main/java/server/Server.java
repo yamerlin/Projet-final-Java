@@ -41,7 +41,7 @@ public class Server {
 
     public void addClient(ConnectedClient newClient){
         this.clients.add(newClient);
-        broadcastMessage(new Message("",newClient.getId() + " vient de se connecter "),newClient.getId());
+        broadcastMessage(new Message("Server",newClient.getId() + " vient de se connecter "),newClient.getId());
     }
     public void broadcastMessage(Message mess, int id){
         for (ConnectedClient client : clients) {

@@ -1,16 +1,16 @@
-package client;
+//package client;
 
 /**
  * starts a client. Reads the address and port from the command line argument
  * @author Remi Watrigant
  *
  */
-public class MainClient {
+//public class MainClient {
     /**
      * construct a new client
      * @param args
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             if (args.length != 2) {
                 printUsage();
@@ -28,4 +28,4 @@ public class MainClient {
         System.out.println("\t<address>: server's ip address");
         System.out.println("\t<port>: server's port");
     }
-}
+}*/

@@ -1,16 +1,16 @@
-package server;
+//package server;
 
 /**
  * start a server. Reads the server's port from the command line argument
  * @author Remi Watrigant
  *
  */
-public class MainServer {
+//public class MainServer {
     /**
      * creates a new server
      * @param args
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             if (args.length != 1) {
                 printUsage();
@@ -26,4 +26,4 @@ public class MainServer {
         System.out.println("java server.Server <port>");
         System.out.println("\t<port>: server's port");
     }
-}
+}*/

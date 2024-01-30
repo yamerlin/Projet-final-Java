@@ -7,6 +7,8 @@ public class Connection implements Runnable{
     private ServerSocket serverSocket;
 
     public Connection(Server server) {
+        System.out.println("CONNECTION");
+
         this.server = server;
         try {
             this.serverSocket = new ServerSocket(server.getPort());

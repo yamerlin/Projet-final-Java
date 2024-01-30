@@ -14,6 +14,7 @@ public class ConnectedClient implements Runnable{
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private boolean finDePartie;
 
     public ConnectedClient(Server server, Socket socket) {
         idCounter++;
@@ -31,17 +32,36 @@ public class ConnectedClient implements Runnable{
     @Override
     public void run() {
         try{
+            Message info = new Message("Id", "Vous êtes le joueur " + id);
+            this.out.writeObject(info);
+
             in = new ObjectInputStream(socket.getInputStream());
             boolean isActive = true;
             while (isActive) {
                 Message mess = (Message) in.readObject();
                 if (mess != null){
                     if(mess.getSender().equals("Tir")){
+                        mess.setSender("EtatPartie");
                         //RECEPTION D'UN TIR
                         if(server.game.joueur1Vivant && server.game.joueur2Vivant && id == server.game.tour){
                             System.out.println("TIR");
-                            server.game.tirer(server.game.position, server.game.barillet);
+                            finDePartie = server.game.tirer(server.game.position, server.game.barillet);
                             server.game.changeTour();
+
+                            Message tourJoueur = new Message("TourJoueur", "" + id);
+                            server.broadcastMessage(tourJoueur, id);
+
+                            mess.setContent("Le joueur " + id + " a tiré !!!");
+                            server.broadcastMessage(mess, id);
+
+                            if(finDePartie){
+                                Message mort = new Message("EtatPartie", "Le joueur " + id + " est mort ! Tu remportes la partie !");
+                                server.broadcastMessage(mort, id);
+                            }
+                            else{
+                                Message survie = new Message("EtatPartie", "Le joueur " + id + " a survécu !");
+                                server.broadcastMessage(survie, id);
+                            }
                         }
                         else if(server.game.joueur1Vivant && server.game.joueur2Vivant && id != server.game.tour){
                             System.out.println("Ce n'est pas ton tour c'est le tour du joueur " + server.game.tour);
@@ -49,7 +69,6 @@ public class ConnectedClient implements Runnable{
                         else if(server.game.joueur1Vivant || server.game.joueur2Vivant){
                             System.out.println("La partie est terminée");
                         }
-
                     }
                     else{
                         mess.setSender(String.valueOf(id));

@@ -20,8 +20,12 @@ import javafx.scene.text.TextFlow;
 public class ClientPanel extends Parent {
 
     TextFlow receivedText;
+    Text etatPartie;
+    Text textTourDuJoueur;
+    int intTourDuJoueur;
     MenuBar menuBar = new MenuBar();
     Client client;
+    int clientId;
     public void setClient(Client client) {
         this.client = client;
     }
@@ -43,7 +47,6 @@ public class ClientPanel extends Parent {
         receivedText = new TextFlow();
         Button sendBtn = new Button();
         Button clearBtn = new Button();
-        Button tireBtn = new Button();
 
         //Créer la bare de menu en haut de l'écran
         Menu menuHautDeLEcran = new Menu("Menu");
@@ -57,6 +60,7 @@ public class ClientPanel extends Parent {
                 e -> {System.exit(0);}
         );
 
+        //--------------------- Partie tchat ---------------------
 
         //scrollReceivedText.setPrefWidth(400);
         scrollReceivedText.setPrefHeight(350);
@@ -85,11 +89,20 @@ public class ClientPanel extends Parent {
         clearBtn.setVisible(true);
         clearBtn.setText("Clear");
 
+        //--------------------- Partie jeu ---------------------
+
+        Button tireBtn = new Button();
+        etatPartie = new Text();
+        textTourDuJoueur = new Text();
 
         tireBtn.setPrefWidth(200);
         tireBtn.setPrefHeight(20);
         tireBtn.setVisible(true);
         tireBtn.setText("Tire");
+
+        etatPartie.setText("Début de la partie");
+
+        textTourDuJoueur.setText("Tour du joueur 0");
 
         //Ajouter dans les vbox
         vboxTchat.getChildren().add(scrollReceivedText);
@@ -102,6 +115,8 @@ public class ClientPanel extends Parent {
 
         vboxJeu.setPrefWidth(900);
         vboxJeu.getChildren().add(tireBtn);
+        vboxJeu.getChildren().add(etatPartie);
+        vboxJeu.getChildren().add(textTourDuJoueur);
         vboxJeu.setAlignment(Pos.CENTER);
 
         //Ajouter dans le pane
@@ -126,8 +141,17 @@ public class ClientPanel extends Parent {
         tireBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Message mess = new Message("Tir", "tir");
-                client.sendMessage(mess);
+                Message tir = new Message("Tir", "tir");
+                client.sendMessage(tir);
+
+                if(intTourDuJoueur == 0){
+                    intTourDuJoueur = 1;
+                }
+                else{
+                    intTourDuJoueur = 0;
+                }
+
+                textTourDuJoueur.setText("Tour du joueur " + intTourDuJoueur);
             }
         });
 
@@ -141,8 +165,26 @@ public class ClientPanel extends Parent {
 
     }
 
-    public void printNewMessage(Message mess) {
+    public void majEtatPartieText(Message mess) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                etatPartie.setText(mess.getContent());
+            }
+        });
+    }
 
+    public void majTourDuJoueur(Message mess) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                intTourDuJoueur = Integer.parseInt(mess.getContent());
+                textTourDuJoueur.setText("Tour du joueur " + mess.getContent());
+            }
+        });
+    }
+
+    public void printNewMessage(Message mess) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

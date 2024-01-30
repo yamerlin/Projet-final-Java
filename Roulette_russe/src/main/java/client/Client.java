@@ -54,7 +54,16 @@ public class Client {
 
     public Message messageReceived(Message message){
         System.out.println(message);
-        view.printNewMessage(message);
+        if(message.getSender().equals("EtatPartie")){
+            view.majEtatPartieText(message);
+        }
+        else if (message.getSender().equals("TourJoueur")) {
+            view.majTourDuJoueur(message);
+        }
+        else{
+            view.printNewMessage(message);
+        }
+
         return message;
     }
 
