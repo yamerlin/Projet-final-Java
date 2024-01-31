@@ -24,6 +24,7 @@ public class ConnectedClient implements Runnable{
         try{
             out = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Nouvelle connexion, id = " + id);
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -32,7 +33,7 @@ public class ConnectedClient implements Runnable{
     @Override
     public void run() {
         try{
-            Message info = new Message("Id", "Vous êtes le joueur " + id);
+            Message info = new Message("Id", "" + id);
             this.out.writeObject(info);
 
             in = new ObjectInputStream(socket.getInputStream());
@@ -48,7 +49,7 @@ public class ConnectedClient implements Runnable{
                             finDePartie = server.game.tirer(server.game.position, server.game.barillet);
                             server.game.changeTour();
 
-                            Message tourJoueur = new Message("TourJoueur", "" + id);
+                            Message tourJoueur = new Message("TourJoueur", "" + server.game.tour);
                             server.broadcastMessage(tourJoueur, id);
 
                             mess.setContent("Le joueur " + id + " a tiré !!!");

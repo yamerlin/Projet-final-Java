@@ -22,6 +22,7 @@ public class ClientPanel extends Parent {
     TextFlow receivedText;
     Text etatPartie;
     Text textTourDuJoueur;
+    Text textIdDuJoueur;
     int intTourDuJoueur;
     MenuBar menuBar = new MenuBar();
     Client client;
@@ -94,6 +95,7 @@ public class ClientPanel extends Parent {
         Button tireBtn = new Button();
         etatPartie = new Text();
         textTourDuJoueur = new Text();
+        textIdDuJoueur = new Text();
 
         tireBtn.setPrefWidth(200);
         tireBtn.setPrefHeight(20);
@@ -103,6 +105,8 @@ public class ClientPanel extends Parent {
         etatPartie.setText("Début de la partie");
 
         textTourDuJoueur.setText("Tour du joueur 0");
+
+        textIdDuJoueur.setText("Vous êtes le joueur " + this.clientId);
 
         //Ajouter dans les vbox
         vboxTchat.getChildren().add(scrollReceivedText);
@@ -114,6 +118,7 @@ public class ClientPanel extends Parent {
         vboxTchat.setPadding(new Insets(50,50,50,50));
 
         vboxJeu.setPrefWidth(900);
+        vboxJeu.getChildren().add(textIdDuJoueur);
         vboxJeu.getChildren().add(tireBtn);
         vboxJeu.getChildren().add(etatPartie);
         vboxJeu.getChildren().add(textTourDuJoueur);
@@ -141,17 +146,13 @@ public class ClientPanel extends Parent {
         tireBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Message tir = new Message("Tir", "tir");
-                client.sendMessage(tir);
-
-                if(intTourDuJoueur == 0){
-                    intTourDuJoueur = 1;
+                if(intTourDuJoueur == clientId){
+                    Message tir = new Message("Tir", "tir");
+                    client.sendMessage(tir);
                 }
                 else{
-                    intTourDuJoueur = 0;
+                    System.out.println("Ce n'est pas ton tour");
                 }
-
-                textTourDuJoueur.setText("Tour du joueur " + intTourDuJoueur);
             }
         });
 
@@ -184,6 +185,15 @@ public class ClientPanel extends Parent {
         });
     }
 
+    public void majIdDuJoueur(int id) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                textIdDuJoueur.setText("Vous êtes le joueur " + id);
+            }
+        });
+    }
+
     public void printNewMessage(Message mess) {
         Platform.runLater(new Runnable() {
             @Override
@@ -194,6 +204,12 @@ public class ClientPanel extends Parent {
                 receivedText.getChildren().add(text);
             }
         });
+    }
+
+    public void setId(int id){
+        this.clientId = id;
+        System.out.println("ID mis a jour :" + this.clientId);
+        majIdDuJoueur(id);
     }
 
 }

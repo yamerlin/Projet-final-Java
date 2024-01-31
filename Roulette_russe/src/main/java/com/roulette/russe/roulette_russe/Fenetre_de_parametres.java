@@ -73,7 +73,7 @@ public class Fenetre_de_parametres {
                     tailleBarillet = 5;
                 }
 
-                server = new Server(5000, tailleBarillet);
+                server = new Server(5000, tailleBarillet, numImage);
 
                 //game = new Game(tailleBarillet);
 

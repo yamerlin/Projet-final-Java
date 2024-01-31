@@ -22,6 +22,7 @@ public class Connection implements Runnable{
     public void run() {
         while (true){
             try{
+                System.out.println("DETECTION CONNECTION");
                 Socket sockNewClient = serverSocket.accept();
                 ConnectedClient newClient = new ConnectedClient(server, sockNewClient);
                 newClient.setId(server.getNumClients());

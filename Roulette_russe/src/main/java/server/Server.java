@@ -9,14 +9,14 @@ public class Server {
     Game game;
     private ArrayList<ConnectedClient> clients;
 
-    public Server(int port, int tailleBarillet) {
+    public Server(int port, int tailleBarillet, int modelDuPistolet) {
         this.port = port;
         this.clients = new ArrayList<ConnectedClient>();
 
         Thread threadConnection = new Thread(new Connection(this));
         threadConnection.start();
 
-        game = new Game(tailleBarillet);
+        game = new Game(tailleBarillet, modelDuPistolet);
     }
 
     public int getPort() {
@@ -43,9 +43,13 @@ public class Server {
         this.clients.add(newClient);
         broadcastMessage(new Message("Server",newClient.getId() + " vient de se connecter "),newClient.getId());
     }
+
     public void broadcastMessage(Message mess, int id){
         for (ConnectedClient client : clients) {
-            if (client.getId() != id) {
+            if (mess.getSender().equals("TourJoueur")){
+                client.sendMessage(mess);
+            }
+            else if(client.getId() != id) {
                 client.sendMessage(mess);
             }
         }

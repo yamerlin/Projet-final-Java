@@ -9,8 +9,10 @@ public class Game {
     boolean joueur1Vivant;
     boolean joueur2Vivant;
     int tailleBarillet;
+    private static int modelDuPistolet;
 
-    public Game(int tailleBarillet){
+    public Game(int tailleBarillet, int modelDuPistolet){
+        this.modelDuPistolet = modelDuPistolet;
         nouvellePartie(tailleBarillet);
     }
 

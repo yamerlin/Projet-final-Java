@@ -18,6 +18,7 @@ public class Client {
     private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    public int id;
 
     public Client(String address, int port){
         //view = new ClientPanel();
@@ -59,6 +60,12 @@ public class Client {
         }
         else if (message.getSender().equals("TourJoueur")) {
             view.majTourDuJoueur(message);
+        }
+        else if(message.getSender().equals("Id")){
+            System.out.println("Received ID : " + message.getContent());
+            this.id = Integer.parseInt(message.getContent());
+
+            view.setId(this.id);
         }
         else{
             view.printNewMessage(message);
