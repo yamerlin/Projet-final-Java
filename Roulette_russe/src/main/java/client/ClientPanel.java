@@ -14,11 +14,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-//Bonjour
+import java.io.FileInputStream;
 
 public class ClientPanel extends Parent {
-
+    ImageView imageViewTir;
     TextFlow receivedText;
     Text etatPartie;
     Text textTourDuJoueur;
@@ -27,11 +29,14 @@ public class ClientPanel extends Parent {
     MenuBar menuBar = new MenuBar();
     Client client;
     int clientId;
+    boolean[] barillet = new boolean[8];
+    int indexBarrilet = 0;
     public void setClient(Client client) {
         this.client = client;
     }
 
     public ClientPanel() {
+
         BorderPane pane = new BorderPane();
 
         VBox vboxJeu = new VBox();
@@ -119,6 +124,7 @@ public class ClientPanel extends Parent {
 
         vboxJeu.setPrefWidth(900);
         vboxJeu.getChildren().add(textIdDuJoueur);
+        //vboxJeu.getChildren().add(gifTir());
         vboxJeu.getChildren().add(tireBtn);
         vboxJeu.getChildren().add(etatPartie);
         vboxJeu.getChildren().add(textTourDuJoueur);
@@ -128,6 +134,8 @@ public class ClientPanel extends Parent {
         pane.setLeft(vboxJeu);
         pane.setRight(vboxTchat);
         pane.setTop(menuBar);
+
+
 
 
         //Ajouter dans la scene
@@ -149,6 +157,14 @@ public class ClientPanel extends Parent {
                 if(intTourDuJoueur == clientId){
                     Message tir = new Message("Tir", "tir");
                     client.sendMessage(tir);
+
+                    if(barillet[indexBarrilet]){
+                        System.out.println("Client : tu meurt");
+                        messageDeDefaite();
+                    }
+                    else{
+                        System.out.println("Client : tu survie");
+                    }
                 }
                 else{
                     System.out.println("Ce n'est pas ton tour");
@@ -163,7 +179,6 @@ public class ClientPanel extends Parent {
                 textToSend.setText("");
             }
         });
-
     }
 
     public void majEtatPartieText(Message mess) {
@@ -171,6 +186,15 @@ public class ClientPanel extends Parent {
             @Override
             public void run() {
                 etatPartie.setText(mess.getContent());
+            }
+        });
+    }
+
+    public void messageDeDefaite() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                etatPartie.setText("Tu es mort ! Tu perds la partie !");
             }
         });
     }
@@ -210,6 +234,30 @@ public class ClientPanel extends Parent {
         this.clientId = id;
         System.out.println("ID mis a jour :" + this.clientId);
         majIdDuJoueur(id);
+    }
+
+    public void setBarillet(boolean[] barillet){
+        this.barillet = barillet;
+
+        System.out.println("Barrilet du client set : ");
+        for(int i=0; i<barillet.length; i++){
+            System.out.println(barillet[i]+" ");
+        }
+    }
+
+    public void avancerIndexBarrilet(){
+        indexBarrilet++;
+        System.out.println("Le barillet a avancé");
+    }
+
+    public ImageView gifTir(){
+        Image tir = new Image(this.getClass().getResource("Niveau 1 SW R8/SW R8.png").toExternalForm());
+
+        imageViewTir = new ImageView(tir);
+        //imageViewTir.setScaleX(0.3);
+        //imageViewTir.setScaleY(0.3);
+
+        return imageViewTir;
     }
 
 }

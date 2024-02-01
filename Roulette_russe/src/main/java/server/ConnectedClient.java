@@ -36,6 +36,11 @@ public class ConnectedClient implements Runnable{
             Message info = new Message("Id", "" + id);
             this.out.writeObject(info);
 
+            for(int i=0; i<server.game.barillet.length; i++){
+                Message barillet = new Message("Barillet", ""+server.game.barillet[i]);
+                this.out.writeObject(barillet);
+            }
+
             in = new ObjectInputStream(socket.getInputStream());
             boolean isActive = true;
             while (isActive) {

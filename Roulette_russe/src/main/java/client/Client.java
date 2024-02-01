@@ -19,6 +19,8 @@ public class Client {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     public int id;
+    public boolean[] barillet = new boolean[8];
+    public int indexBarillet = 0;
 
     public Client(String address, int port){
         //view = new ClientPanel();
@@ -60,12 +62,18 @@ public class Client {
         }
         else if (message.getSender().equals("TourJoueur")) {
             view.majTourDuJoueur(message);
+            view.avancerIndexBarrilet();
         }
         else if(message.getSender().equals("Id")){
             System.out.println("Received ID : " + message.getContent());
             this.id = Integer.parseInt(message.getContent());
 
             view.setId(this.id);
+        } else if (message.getSender().equals("Barillet")) {
+            barillet[indexBarillet] = Boolean.parseBoolean(message.getContent());
+            indexBarillet ++;
+
+            view.setBarillet(barillet);
         }
         else{
             view.printNewMessage(message);
