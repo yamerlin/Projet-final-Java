@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import client.ClientAuth;
+
 public class Fenetre_de_connexion extends Application {
     public static Stage mainWindow;
     public void start(final Stage mainWindow) throws IOException {
@@ -45,6 +47,13 @@ public class Fenetre_de_connexion extends Application {
         identification.setLayoutY(300);
         identification.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
+
+                String username = nom.getText();
+                ClientAuth clientAuth= new ClientAuth();
+                int id = clientAuth.auth(username);
+                System.out.println(username);
+                System.out.println(id);
+
                 //Cacher la fenêtre de menu
                 mainWindow.hide();
 

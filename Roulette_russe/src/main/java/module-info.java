@@ -10,6 +10,7 @@ module com.roulette.russe.roulette_russe {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens com.roulette.russe.roulette_russe to javafx.fxml;
     exports com.roulette.russe.roulette_russe;

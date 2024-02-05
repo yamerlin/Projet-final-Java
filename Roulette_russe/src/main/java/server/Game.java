@@ -1,5 +1,13 @@
 package server;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import BDD.ConnexionBdd;
+import BDD.Users;
 
 public class Game {
     int difficulté;
@@ -10,6 +18,7 @@ public class Game {
     boolean joueur2Vivant;
     int tailleBarillet;
     private static int modelDuPistolet;
+    private Connection connexion;
 
     public Game(int tailleBarillet, int modelDuPistolet){
         this.modelDuPistolet = modelDuPistolet;
@@ -81,5 +90,28 @@ public class Game {
         else if(tour == 1){
             tour = 0;
         }
+    }
+
+    public List<Users> StatsPlayer(){
+        List<Users> users= new ArrayList<>();
+        try {
+            connexion = ConnexionBdd.getConnection();
+
+            PreparedStatement ps = connexion.prepareStatement("SELECT users.nom,scores.victoire FROM users JOIN scores ON users.id=scores.userId ORDER BY scores.victoire DESC;");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Users users1 = new Users();
+                users1.setId(rs.getInt("id"));
+                users1.setNom(rs.getString("nom"));
+                users.add(users1);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+
     }
 }
