@@ -59,6 +59,7 @@ public class Client {
         System.out.println(message);
         if(message.getSender().equals("EtatPartie")){
             view.majEtatPartieText(message);
+            view.majImageGun();
         }
         else if (message.getSender().equals("TourJoueur")) {
             view.majTourDuJoueur(message);

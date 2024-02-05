@@ -16,11 +16,15 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import java.io.File;
 import java.io.FileInputStream;
 
 public class ClientPanel extends Parent {
-    ImageView imageViewTir;
+    ImageView gifTir;
+    ImageView gifClick;
+    ImageView imageGun;
+    VBox vboxJeu;
+    VBox vboxTchat;
     TextFlow receivedText;
     Text etatPartie;
     Text textTourDuJoueur;
@@ -35,12 +39,15 @@ public class ClientPanel extends Parent {
         this.client = client;
     }
 
-    public ClientPanel() {
+    public ClientPanel(ImageView gifTir, ImageView gifClick,ImageView imageGun) {
+        this.gifTir = gifTir;
+        this.gifClick = gifClick;
+        this.imageGun = imageGun;
 
         BorderPane pane = new BorderPane();
 
-        VBox vboxJeu = new VBox();
-        VBox vboxTchat = new VBox();
+        vboxJeu = new VBox();
+        vboxTchat = new VBox();
 
         Text text = new Text("Client Panel");
         vboxTchat.getChildren().add(text);
@@ -128,6 +135,7 @@ public class ClientPanel extends Parent {
         vboxJeu.getChildren().add(tireBtn);
         vboxJeu.getChildren().add(etatPartie);
         vboxJeu.getChildren().add(textTourDuJoueur);
+        vboxJeu.getChildren().add(imageGun);
         vboxJeu.setAlignment(Pos.CENTER);
 
         //Ajouter dans le pane
@@ -161,9 +169,16 @@ public class ClientPanel extends Parent {
                     if(barillet[indexBarrilet]){
                         System.out.println("Client : tu meurt");
                         messageDeDefaite();
+                        vboxJeu.getChildren().remove(imageGun);
+                        vboxJeu.getChildren().remove(gifClick);
+                        vboxJeu.getChildren().add(gifTir);
                     }
                     else{
                         System.out.println("Client : tu survie");
+
+                        vboxJeu.getChildren().remove(imageGun);
+                        vboxJeu.getChildren().remove(gifClick);
+                        vboxJeu.getChildren().add(gifClick);
                     }
                 }
                 else{
@@ -230,6 +245,17 @@ public class ClientPanel extends Parent {
         });
     }
 
+    public void majImageGun() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                vboxJeu.getChildren().remove(imageGun);
+                vboxJeu.getChildren().remove(gifClick);
+                vboxJeu.getChildren().add(imageGun);
+            }
+        });
+    }
+
     public void setId(int id){
         this.clientId = id;
         System.out.println("ID mis a jour :" + this.clientId);
@@ -249,15 +275,4 @@ public class ClientPanel extends Parent {
         indexBarrilet++;
         System.out.println("Le barillet a avancé");
     }
-
-    public ImageView gifTir(){
-        Image tir = new Image(this.getClass().getResource("Niveau 1 SW R8/SW R8.png").toExternalForm());
-
-        imageViewTir = new ImageView(tir);
-        //imageViewTir.setScaleX(0.3);
-        //imageViewTir.setScaleY(0.3);
-
-        return imageViewTir;
-    }
-
 }

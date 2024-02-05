@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,8 +23,17 @@ public class MainGui {
     }
 
     public void creerFenetre() {
+        Image gifTir = new Image(this.getClass().getResource("gunshotgif.gif").toExternalForm());
+        ImageView imageViewGifTir = new ImageView(gifTir);
+
+        Image gifClick = new Image(this.getClass().getResource("clickgif.gif").toExternalForm());
+        ImageView imageViewGifClick = new ImageView(gifClick);
+
+        Image imageGun = new Image(this.getClass().getResource("gunpic.gif").toExternalForm());
+        ImageView imageViewGun = new ImageView(imageGun);
+
         mainWindow = new Stage();
-        ClientPanel clientPanel = new ClientPanel();
+        ClientPanel clientPanel = new ClientPanel(imageViewGifTir, imageViewGifClick, imageViewGun);
         Group root = new Group();
         root.getChildren().add(clientPanel);
         Scene scene = new Scene(root, 1200, 800);
