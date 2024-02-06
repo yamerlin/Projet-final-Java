@@ -18,10 +18,15 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
+/**
+ * Classe qui crée le menu.
+ */
 public class Fenetre_de_menu {
     public static Stage mainWindow;
+    int id;
 
-    public Fenetre_de_menu() {
+    public Fenetre_de_menu(int id) {
+        this.id = id;
         this.creerFenetre();
     }
 
