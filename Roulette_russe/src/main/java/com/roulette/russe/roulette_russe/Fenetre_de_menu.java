@@ -39,7 +39,6 @@ public class Fenetre_de_menu {
         mainWindow.setTitle("Roulette russe");
 
         //Message de Bienvenue
-
         Text bienvenue;
         bienvenue = new Text("Bienvenue "+ username);
         bienvenue.setLayoutX(325);

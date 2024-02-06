@@ -2,10 +2,7 @@ package client;
 
 import BDD.ConnexionBdd;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Objects;
 
 public class ClientAuth {
@@ -23,6 +20,7 @@ public class ClientAuth {
     public int auth(String username) {
 
         int id = 0;
+        Boolean nouveau = true;
         try {
 
             connexion = ConnexionBdd.getConnection();
@@ -33,9 +31,14 @@ public class ClientAuth {
                 if (Objects.equals(username, name)) {
                     System.out.println("Connecté an tant que: "+ name);
                     id = rs.getInt("id");
+                    nouveau = false;
                     break;
                 }
-
+            }
+            if(nouveau==true){
+                Statement stmt = connexion.createStatement();
+                String sql="INSERT INTO `users` (`nom`,`victoires`) VALUES\n" + "('"+username+"',0);";
+                stmt.execute(sql);
             }
         } catch (Exception e) {
             System.out.println(e);
