@@ -88,7 +88,7 @@ public class Fenetre_de_menu {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de statistiques
-                new Fenetre_de_statistiques();
+                new Fenetre_de_statistiques(id);
             }
         });
 

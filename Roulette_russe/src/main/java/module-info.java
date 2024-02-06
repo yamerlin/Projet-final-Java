@@ -13,5 +13,6 @@ module com.roulette.russe.roulette_russe {
     requires java.sql;
 
     opens com.roulette.russe.roulette_russe to javafx.fxml;
+    opens BDD;
     exports com.roulette.russe.roulette_russe;
 }

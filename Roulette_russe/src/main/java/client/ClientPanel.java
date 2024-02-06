@@ -181,7 +181,7 @@ public class ClientPanel extends Parent {
         tireBtn.setPrefWidth(200);
         tireBtn.setPrefHeight(20);
         tireBtn.setVisible(true);
-        tireBtn.setText("Tire");
+        tireBtn.setText("Tir");
 
         etatPartie.setText("Début de la partie");
 

@@ -16,6 +16,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -29,8 +32,11 @@ import javafx.stage.Stage;
 public class Fenetre_de_statistiques {
     public static Stage mainWindow;
     private Connection connexion;
+    int id;
+    //public TableView tableView;
 
-    public Fenetre_de_statistiques() {
+    public Fenetre_de_statistiques(int id) {
+        this.id = id;
         this.creerFenetre();
     }
 
@@ -53,11 +59,44 @@ public class Fenetre_de_statistiques {
         retour.setLayoutX(10);
         retour.setLayoutY(590);
 
+        retour.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent actionEvent) {
+                //Cacher la fenêtre de menu
+                mainWindow.hide();
+
+                //Instancier la fenêtre de menu
+                new Fenetre_de_menu(id);
+            }
+        });
+
+        //Tableau d'affichage des statistiques
+
+        TableView tableView = new TableView();
+        TableColumn<Users, String> columnNom = new TableColumn<>("Nom");
+        columnNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+        TableColumn<Users, Integer> columnId = new TableColumn<>("Id");
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Users, Integer> victoire = new TableColumn<>("Victoire");
+        victoire.setCellValueFactory(new PropertyValueFactory<>("victoire"));
+
+        columnNom.setPrefWidth(180);
+        columnId.setPrefWidth(180);
+        victoire.setPrefWidth(180);
+
+        tableView.getColumns().add(columnId);
+        tableView.getColumns().add(columnNom);
+        tableView.getColumns().add(victoire);
+
+        tableView.getItems().add(new Users(1, "Mos", 34));
+        tableView.getItems().add(new Users(2, "Yann", 19));
+
         //Un dégradé bleu pour le fond
         root.setBackground(Background.fill(new LinearGradient(0.0, 0.0, 1.0, 1.0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0.0, Color.web("#2e86c1")), new Stop(1.0, Color.web("#fdfefe"))})));
 
         //Ajouter tous les éléments à la scène
-        root.getChildren().addAll(new Node[]{retour});
+        root.getChildren().addAll(new Node[]{retour, tableView});
     }
 
     public List<Users> StatsPlayer(){
@@ -70,9 +109,7 @@ public class Fenetre_de_statistiques {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Users users1 = new Users();
-                users1.setId(rs.getInt("id"));
-                users1.setNom(rs.getString("nom"));
+                Users users1 = new Users(rs.getInt("id"), rs.getString("nom"), rs.getInt("victoire"));
                 users.add(users1);
             }
 
