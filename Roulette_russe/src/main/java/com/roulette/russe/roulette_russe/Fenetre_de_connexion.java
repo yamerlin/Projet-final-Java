@@ -73,7 +73,7 @@ public class Fenetre_de_connexion extends Application {
                 String username = nom.getText();
 
                 if(username.equals("")){
-                    System.out.println("Vide");
+
                     pseudo = new Text("Veuillez entrer un pseudonyme");
                     pseudo.setLayoutX(250);
                     pseudo.setLayoutY(190);
@@ -81,7 +81,7 @@ public class Fenetre_de_connexion extends Application {
                     root.getChildren().add(pseudo);
                 }
                 else{
-                    System.out.println("Pas Vide");
+
                     ClientAuth clientAuth= new ClientAuth();
                     int id = clientAuth.auth(username);
                     System.out.println(username);
@@ -91,7 +91,7 @@ public class Fenetre_de_connexion extends Application {
                     mainWindow.hide();
 
                     //Instancier la fenêtre de jeu
-                    new Fenetre_de_menu(id);
+                    new Fenetre_de_menu(id,username);
                 }
             }
         });

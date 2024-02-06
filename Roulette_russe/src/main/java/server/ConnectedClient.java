@@ -63,6 +63,9 @@ public class ConnectedClient implements Runnable{
                             if(finDePartie){
                                 Message mort = new Message("EtatPartie", "Le joueur " + id + " est mort ! Tu remportes la partie !");
                                 server.broadcastMessage(mort, id);
+
+                                Message victoire = new Message("Victoire", "");
+                                server.broadcastMessage(victoire, id);
                             }
                             else{
                                 Message survie = new Message("EtatPartie", "Le joueur " + id + " a survécu !");

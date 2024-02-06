@@ -124,6 +124,12 @@ public class Client {
 
             view.setId(this.id);
         }
+        //Vérifier si le message est un message de victoire
+        else if(message.getSender().equals("Victoire")){
+            System.out.println("Victoire reçu");
+
+            view.incrementerVictoire();
+        }
         //Vérifier si le message est un message concernant le barillet
         else if (message.getSender().equals("Barillet")) {
             barillet[indexBarillet] = Boolean.parseBoolean(message.getContent());

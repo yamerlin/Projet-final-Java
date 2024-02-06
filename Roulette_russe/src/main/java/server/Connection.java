@@ -33,8 +33,6 @@ public class Connection implements Runnable{
             }catch (Exception e){
                 System.out.println(e);
             }
-
-
         }
     }
 }

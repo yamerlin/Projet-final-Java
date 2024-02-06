@@ -91,6 +91,4 @@ public class Game {
             tour = 0;
         }
     }
-
-
 }

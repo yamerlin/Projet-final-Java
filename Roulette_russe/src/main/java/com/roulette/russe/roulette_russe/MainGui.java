@@ -17,8 +17,10 @@ import java.io.IOException;
 public class MainGui {
 
     public static Stage mainWindow;
+    public int idDB;
 
-    public MainGui(){
+    public MainGui(int idDB){
+        this.idDB = idDB;
         this.creerFenetre();
     }
 
@@ -33,7 +35,7 @@ public class MainGui {
         ImageView imageViewGun = new ImageView(imageGun);
 
         mainWindow = new Stage();
-        ClientPanel clientPanel = new ClientPanel(imageViewGifTir, imageViewGifClick, imageViewGun);
+        ClientPanel clientPanel = new ClientPanel(imageViewGifTir, imageViewGifClick, imageViewGun, idDB);
         Group root = new Group();
         root.getChildren().add(clientPanel);
         Scene scene = new Scene(root, 1200, 800);

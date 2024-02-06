@@ -3,12 +3,12 @@ package BDD;
 public class Users {
     private int id;
     private String nom;
-    private int victoire;
+    private int victoires;
 
-    public Users(int id, String nom, int victoire){
+    public Users(int id, String nom, int victoires){
         this.id = id;
         this.nom = nom;
-        this.victoire = victoire;
+        this.victoires = victoires;
     }
 
     public String getNom() {
@@ -27,7 +27,7 @@ public class Users {
         this.id = id;
     }
 
-    public int getVictoire(){ return victoire; }
+    public int getVictoires(){ return victoires; }
 
-    public void setVictoire(int victoire) { this.victoire = victoire; }
+    public void setVictoires(int victoires) { this.victoires = victoires; }
 }

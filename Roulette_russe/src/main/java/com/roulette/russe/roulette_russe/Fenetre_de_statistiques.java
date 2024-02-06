@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -33,10 +34,11 @@ public class Fenetre_de_statistiques {
     public static Stage mainWindow;
     private Connection connexion;
     int id;
-    //public TableView tableView;
+    String username;
 
-    public Fenetre_de_statistiques(int id) {
+    public Fenetre_de_statistiques(int id,String username) {
         this.id = id;
+        this.username=username;
         this.creerFenetre();
     }
 
@@ -65,7 +67,7 @@ public class Fenetre_de_statistiques {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de menu
-                new Fenetre_de_menu(id);
+                new Fenetre_de_menu(id,username);
             }
         });
 
@@ -78,19 +80,30 @@ public class Fenetre_de_statistiques {
         TableColumn<Users, Integer> columnId = new TableColumn<>("Id");
         columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Users, Integer> victoire = new TableColumn<>("Victoire");
-        victoire.setCellValueFactory(new PropertyValueFactory<>("victoire"));
+        TableColumn<Users, Integer> victoires = new TableColumn<>("Victoires");
+        victoires.setCellValueFactory(new PropertyValueFactory<>("victoires"));
 
         columnNom.setPrefWidth(180);
         columnId.setPrefWidth(180);
-        victoire.setPrefWidth(180);
+        victoires.setPrefWidth(180);
 
         tableView.getColumns().add(columnId);
         tableView.getColumns().add(columnNom);
-        tableView.getColumns().add(victoire);
+        tableView.getColumns().add(victoires);
 
-        tableView.getItems().add(new Users(1, "Mos", 34));
-        tableView.getItems().add(new Users(2, "Yann", 19));
+        tableView.setFixedCellSize(25);
+        tableView.setPrefSize(542,400);
+        tableView.setLayoutX(129);
+        tableView.setLayoutY(100);
+
+
+        List<Users> users = StatsPlayer();
+
+
+        for ( Users user : users ) {
+            System.out.println(user.getNom());
+            tableView.getItems().add(new Users(user.getId(), user.getNom(), user.getVictoires()));
+        }
 
         //Un dégradé bleu pour le fond
         root.setBackground(Background.fill(new LinearGradient(0.0, 0.0, 1.0, 1.0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0.0, Color.web("#2e86c1")), new Stop(1.0, Color.web("#fdfefe"))})));
@@ -104,14 +117,15 @@ public class Fenetre_de_statistiques {
         try {
             connexion = ConnexionBdd.getConnection();
 
-            PreparedStatement ps = connexion.prepareStatement("SELECT users.nom,scores.victoire FROM users JOIN scores ON users.id=scores.userId ORDER BY scores.victoire DESC;");
+            PreparedStatement ps = connexion.prepareStatement("SELECT * FROM users ORDER BY users.victoires DESC LIMIT 15;");
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Users users1 = new Users(rs.getInt("id"), rs.getString("nom"), rs.getInt("victoire"));
+                Users users1 = new Users(rs.getInt("id") , rs.getString("nom"), rs.getInt("victoires"));
                 users.add(users1);
             }
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

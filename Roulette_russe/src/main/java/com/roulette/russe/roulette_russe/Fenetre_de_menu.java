@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -24,9 +25,11 @@ import javafx.stage.Stage;
 public class Fenetre_de_menu {
     public static Stage mainWindow;
     int id;
+    String username;
 
-    public Fenetre_de_menu(int id) {
+    public Fenetre_de_menu(int id,String username) {
         this.id = id;
+        this.username=username;
         this.creerFenetre();
     }
 
@@ -34,6 +37,14 @@ public class Fenetre_de_menu {
         mainWindow = new Stage();
         //Ajouter un titre
         mainWindow.setTitle("Roulette russe");
+
+        //Message de Bienvenue
+
+        Text bienvenue;
+        bienvenue = new Text("Bienvenue "+ username);
+        bienvenue.setLayoutX(325);
+        bienvenue.setLayoutY(30);
+        bienvenue.setStyle("-fx-font: 20 Helvetica;");
 
         //Créer la scene
         Pane root = new Pane();
@@ -54,7 +65,7 @@ public class Fenetre_de_menu {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de jeu
-                new MainGui();
+                new MainGui(id);
             }
         });
 
@@ -71,7 +82,7 @@ public class Fenetre_de_menu {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de création de partie
-                new Fenetre_de_parametres();
+                new Fenetre_de_parametres(id);
             }
         });
 
@@ -88,7 +99,7 @@ public class Fenetre_de_menu {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de statistiques
-                new Fenetre_de_statistiques(id);
+                new Fenetre_de_statistiques(id,username);
             }
         });
 
@@ -109,6 +120,6 @@ public class Fenetre_de_menu {
         root.setBackground(Background.fill(new LinearGradient(0.0, 0.0, 1.0, 1.0, true, CycleMethod.NO_CYCLE, new Stop[]{new Stop(0.0, Color.web("#2e86c1")), new Stop(1.0, Color.web("#fdfefe"))})));
 
         //Ajouter tous les éléments à la scène
-        root.getChildren().addAll(new Node[]{rejoindre_partie,creer_partie, stats, quitter});
+        root.getChildren().addAll(new Node[]{rejoindre_partie,creer_partie, stats, quitter,bienvenue});
     }
 }

@@ -23,8 +23,10 @@ public class Fenetre_de_parametres {
     public static Stage mainWindow;
     public int numImage;
     public Server server;
+    public int idDb;
 
-    public Fenetre_de_parametres(){
+    public Fenetre_de_parametres(int idDb){
+        this.idDb = idDb;
         numImage = 0;
         this.creerFenetre();
     }
@@ -81,7 +83,7 @@ public class Fenetre_de_parametres {
                 mainWindow.hide();
 
                 //Instancier la fenêtre de jeu
-                new MainGui();
+                new MainGui(idDb);
             }
         });
 

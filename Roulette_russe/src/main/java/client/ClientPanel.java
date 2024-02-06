@@ -1,5 +1,6 @@
 package client;
 
+import BDD.ConnexionBdd;
 import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +19,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Objects;
 
 /**
  * Classe qui constitue l'interface graphique principale du jeu pour un client, elle est appelée par MainGui qui l'ajoute lui-même dans la fenêtre principale du programme.
@@ -94,6 +100,12 @@ public class ClientPanel extends Parent {
      */
     int indexBarrilet = 0;
 
+    public int idDB;
+
+    private Connection connexion;
+
+
+
     /**
      * Méthode utilisée pour associé un client à cette interface graphique
      * @param client
@@ -108,10 +120,11 @@ public class ClientPanel extends Parent {
      * @param gifClick Animation canon vide
      * @param imageGun Image de l'arme
      */
-    public ClientPanel(ImageView gifTir, ImageView gifClick,ImageView imageGun) {
+    public ClientPanel(ImageView gifTir, ImageView gifClick,ImageView imageGun, int idDB) {
         this.gifTir = gifTir;
         this.gifClick = gifClick;
         this.imageGun = imageGun;
+        this.idDB = idDB;
 
         BorderPane pane = new BorderPane();
 
@@ -211,9 +224,6 @@ public class ClientPanel extends Parent {
         pane.setLeft(vboxJeu);
         pane.setRight(vboxTchat);
         pane.setTop(menuBar);
-
-
-
 
         //Ajouter dans la scene
         this.getChildren().add(pane);
@@ -394,5 +404,22 @@ public class ClientPanel extends Parent {
     public void avancerIndexBarrilet(){
         indexBarrilet++;
         System.out.println("Le barillet a avancé");
+    }
+
+    public void incrementerVictoire(){
+        System.out.println("Incrémentation victoire pour l'id " + idDB);
+
+        //AJOUTER LE CODE SQL
+
+        try {
+            connexion = ConnexionBdd.getConnection();
+            Statement stmt = connexion.createStatement();
+            String sql="UPDATE `users` SET `victoires`=victoires+1 WHERE id="+idDB+";";
+            stmt.execute(sql);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }

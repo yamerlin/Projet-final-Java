@@ -22,7 +22,6 @@ public class ConnexionBdd {
         String password = properties.getProperty("password");
 
         Class.forName(driver);
-        System.out.println("ici");
         Connection connection = DriverManager.getConnection(url, username, password);
 
         return connection;
