@@ -100,8 +100,14 @@ public class ClientPanel extends Parent {
      */
     int indexBarrilet = 0;
 
+    /**
+     * Variable qui stock l'id de l'utilisateur récupéré dans la bd.
+     */
     public int idDB;
 
+    /**
+     * Variable utilisée pour créer une connexion à la base de données
+     */
     private Connection connexion;
 
 
@@ -213,7 +219,6 @@ public class ClientPanel extends Parent {
 
         vboxJeu.setPrefWidth(900);
         vboxJeu.getChildren().add(textIdDuJoueur);
-        //vboxJeu.getChildren().add(gifTir());
         vboxJeu.getChildren().add(tireBtn);
         vboxJeu.getChildren().add(etatPartie);
         vboxJeu.getChildren().add(textTourDuJoueur);
@@ -406,10 +411,11 @@ public class ClientPanel extends Parent {
         System.out.println("Le barillet a avancé");
     }
 
+    /**
+     * Méthode qui permet de rajouter une victoire à l'utilisateur dans la bd.
+     */
     public void incrementerVictoire(){
         System.out.println("Incrémentation victoire pour l'id " + idDB);
-
-        //AJOUTER LE CODE SQL
 
         try {
             connexion = ConnexionBdd.getConnection();
@@ -420,6 +426,5 @@ public class ClientPanel extends Parent {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 }

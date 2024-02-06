@@ -2,25 +2,62 @@ package server;
 
 import com.roulette.russe.roulette_russe.Fenetre_de_parametres;
 import common.Message;
-
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Classe qui permet la connexion d'un client et l'envoie des messages de tir.
+ */
 public class ConnectedClient implements Runnable{
+    /**
+     * Compteur qui permet de donner un id unique à chacun des deux clients (o et 1).
+     */
     private static int idCounter = 0;
+
+    /**
+     * Id du client.
+     */
     private int id;
+
+    /**
+     * Le serveur.
+     */
     private Server server;
+
+    /**
+     * Le socket
+     */
     private Socket socket;
+
+    /**
+     * Flux de données sortantes.
+     */
     private ObjectOutputStream out;
+
+    /**
+     * Flux de données sortantes.
+     */
     private ObjectInputStream in;
+
+    /**
+     * Bouléen indiquant si la partie est finie ou non.
+     */
     private boolean finDePartie;
 
+    /**
+     * Constructeur.
+     * @param server Le serveur.
+     * @param socket Le socket.
+     */
     public ConnectedClient(Server server, Socket socket) {
+        //Setter les paramètres
         idCounter++;
         this.id = idCounter;
         this.socket = socket;
         this.server = server;
+
+        //Message nouvelle connexion
         try{
             out = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Nouvelle connexion, id = " + id);
@@ -30,12 +67,17 @@ public class ConnectedClient implements Runnable{
         }
     }
 
+    /**
+     * Méthode qui envoie les id, les barillets et les messages de tir.
+     */
     @Override
     public void run() {
         try{
+            //Envoyer leur id aux clients
             Message info = new Message("Id", "" + id);
             this.out.writeObject(info);
 
+            //Envoyer le barillet de l'arme aux clients
             for(int i=0; i<server.game.barillet.length; i++){
                 Message barillet = new Message("Barillet", ""+server.game.barillet[i]);
                 this.out.writeObject(barillet);

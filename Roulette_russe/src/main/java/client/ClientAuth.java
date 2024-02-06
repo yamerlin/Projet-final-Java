@@ -23,9 +23,16 @@ public class ClientAuth {
         Boolean nouveau = true;
         try {
 
+            //Créer la connexion.
             connexion = ConnexionBdd.getConnection();
+
+            //Définir la requéte SQL
             PreparedStatement ps = connexion.prepareStatement("SELECT * from users");
+
+            //Executer la requéte SQL
             ResultSet rs = ps.executeQuery();
+
+            //Rechercher l'utilisateur dans la bd
             while (rs.next()) {
                 String name = rs.getString("nom");
                 if (Objects.equals(username, name)) {
@@ -35,6 +42,8 @@ public class ClientAuth {
                     break;
                 }
             }
+
+            //Si l'utilisateur n'est pas dans la bd alors on le rajoute
             if(nouveau==true){
                 Statement stmt = connexion.createStatement();
                 String sql="INSERT INTO `users` (`nom`,`victoires`) VALUES\n" + "('"+username+"',0);";

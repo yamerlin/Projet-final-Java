@@ -34,7 +34,14 @@ import client.ClientAuth;
  * Class Instanciée au début du programme, sert à créer la fenêtre principale de l'application, et à contenir la method START() qui est le point d'entrée de toute application JavaFX
  */
 public class Fenetre_de_connexion extends Application {
+    /**
+     * Fenêtre principale du menu de connexion.
+     */
     public static Stage mainWindow;
+
+    /**
+     * Variable utilisée pour afficher le pseudo de l'utilisateur.
+     */
     Text pseudo;
 
     /**
@@ -67,6 +74,10 @@ public class Fenetre_de_connexion extends Application {
         identification.setStyle("-fx-font: 24 Helvetica;");
         identification.setLayoutX(250);
         identification.setLayoutY(300);
+
+        /**
+         * Méthode qui contient le comportement du bouton "S'identifier".
+         */
         identification.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
 
@@ -81,7 +92,6 @@ public class Fenetre_de_connexion extends Application {
                     root.getChildren().add(pseudo);
                 }
                 else{
-
                     ClientAuth clientAuth= new ClientAuth();
                     int id = clientAuth.auth(username);
                     System.out.println(username);

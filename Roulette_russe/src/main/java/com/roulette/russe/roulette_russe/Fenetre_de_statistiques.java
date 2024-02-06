@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import BDD.ConnexionBdd;
 import BDD.Users;
 import javafx.application.Application;
@@ -30,18 +29,44 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
+/**
+ * Classe qui crée la fenêtre des statistiques des utilisateurs.
+ */
 public class Fenetre_de_statistiques {
+    /**
+     * Fenêtre principale.
+     */
     public static Stage mainWindow;
+
+    /**
+     * Connexion
+     */
     private Connection connexion;
+
+    /**
+     * Id du joueur dans la bd.
+     */
     int id;
+
+    /**
+     * Nom du joueur dans la bd.
+     */
     String username;
 
+    /**
+     * Constructeur qui initialise les arguments et crée ensuite la fenêtre de statistiques.
+     * @param id Id du joueur dans la bd.
+     * @param username Nom du joueur dans la bd.
+     */
     public Fenetre_de_statistiques(int id,String username) {
         this.id = id;
         this.username=username;
         this.creerFenetre();
     }
 
+    /**
+     * Méthode qui crée la fenêtre graphique de statistiques.
+     */
     public void creerFenetre() {
         mainWindow = new Stage();
         //Ajouter un titre
@@ -61,6 +86,9 @@ public class Fenetre_de_statistiques {
         retour.setLayoutX(10);
         retour.setLayoutY(590);
 
+        /**
+         * Méthode qui défini le comportement du bouton retour.
+         */
         retour.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
                 //Cacher la fenêtre de menu
@@ -96,10 +124,10 @@ public class Fenetre_de_statistiques {
         tableView.setLayoutX(129);
         tableView.setLayoutY(100);
 
-
+        //Liste des utilisateurs présents dans la bd
         List<Users> users = StatsPlayer();
 
-
+        //Les insérer tous dans le tableau de statistiques
         for ( Users user : users ) {
             System.out.println(user.getNom());
             tableView.getItems().add(new Users(user.getId(), user.getNom(), user.getVictoires()));
@@ -112,25 +140,31 @@ public class Fenetre_de_statistiques {
         root.getChildren().addAll(new Node[]{retour, tableView});
     }
 
+    /**
+     * Méthode qui récupére grace à une commande SQL les utilisateurs dans la bd ainsi que leurs statistiques.
+     * @return La liste des utilisateurs.
+     */
     public List<Users> StatsPlayer(){
         List<Users> users= new ArrayList<>();
         try {
+            //Connexion
             connexion = ConnexionBdd.getConnection();
 
+            //Commande SQL
             PreparedStatement ps = connexion.prepareStatement("SELECT * FROM users ORDER BY users.victoires DESC LIMIT 15;");
 
+            //Execution de la commande
             ResultSet rs = ps.executeQuery();
 
+            //Ajout dans la liste
             while (rs.next()) {
                 Users users1 = new Users(rs.getInt("id") , rs.getString("nom"), rs.getInt("victoires"));
                 users.add(users1);
             }
 
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return users;
-
     }
 }

@@ -2,8 +2,18 @@ package server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Classe qui gère les nouvelles connexions au serveur.
+ */
 public class Connection implements Runnable{
+    /**
+     * Serveur.
+     */
     private Server server;
+
+    /**
+     * ServeurSocket.
+     */
     private ServerSocket serverSocket;
 
     public Connection(Server server) {
@@ -16,7 +26,6 @@ public class Connection implements Runnable{
             System.out.println(e);
         }
     }
-
 
     @Override
     public void run() {

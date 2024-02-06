@@ -19,18 +19,43 @@ import javafx.stage.Stage;
 import server.Game;
 import server.Server;
 
+/**
+ * Classe qui crée le menu de choix des paramètres de la partie grqphiquement.
+ */
 public class Fenetre_de_parametres {
+    /**
+     * Fenêtre principale.
+     */
     public static Stage mainWindow;
+
+    /**
+     * Index utilisé pour garder en mémoire la position dans le tableau des images d'armes.
+     */
     public int numImage;
+
+    /**
+     * Le serveur.
+     */
     public Server server;
+
+    /**
+     * Id du joueur dans la bd.
+     */
     public int idDb;
 
+    /**
+     * Constructeur qui initialise les arguments et crée ensuite la fenêtre de paramètres.
+     * @param idDb Id du joueur dans la bd.
+     */
     public Fenetre_de_parametres(int idDb){
         this.idDb = idDb;
         numImage = 0;
         this.creerFenetre();
     }
 
+    /**
+     * Méthode qui crée la fenêtre graphique de paramètres.
+     */
     public void creerFenetre(){
         mainWindow = new Stage();
         Group root = new Group();
@@ -110,6 +135,9 @@ public class Fenetre_de_parametres {
         gauche.setText("<--");
         gauche.setStyle("-fx-font: 24 Helvetica;");
 
+        /**
+         * Fonction pour défiler les images des armes vers la gauche.
+         */
         gauche.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
                 if(numImage == 0){
@@ -118,8 +146,6 @@ public class Fenetre_de_parametres {
                 else{
                     numImage = numImage - 1;
                 }
-
-                System.out.println(numImage);
                 imageView.setImage(tableauImagesDesGun[numImage]);
             }
         });
@@ -129,6 +155,9 @@ public class Fenetre_de_parametres {
         droite.setText("-->");
         droite.setStyle("-fx-font: 24 Helvetica;");
 
+        /**
+         * Fonction pour défiler les images des armes vers la droite.
+         */
         droite.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
                 if(numImage == 2){
@@ -137,8 +166,6 @@ public class Fenetre_de_parametres {
                 else{
                     numImage = numImage + 1;
                 }
-
-                System.out.println(numImage);
                 imageView.setImage(tableauImagesDesGun[numImage]);
             }
         });

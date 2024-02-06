@@ -36,6 +36,9 @@ public class ClientReceive implements Runnable {
         this.socket = socket;
     }
 
+    /**
+     * Méthode qui observe si on reçoit un message du serveur.
+     */
     @Override
     public void run() {
         try{

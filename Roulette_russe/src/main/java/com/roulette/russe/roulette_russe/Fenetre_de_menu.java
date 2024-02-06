@@ -20,19 +20,38 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Classe qui crée le menu.
+ * Classe qui crée le menu grqphiquement.
  */
 public class Fenetre_de_menu {
+    /**
+     * Fenêtre principale du menu graphique.
+     */
     public static Stage mainWindow;
+
+    /**
+     * Id du joueur.
+     */
     int id;
+
+    /**
+     * Nom du joueur.
+     */
     String username;
 
+    /**
+     * Constructeur qui initialise les arguments et crée ensuite la fenêtre de menu.
+     * @param id Id du joueur.
+     * @param username Nom du joueur.
+     */
     public Fenetre_de_menu(int id,String username) {
         this.id = id;
         this.username=username;
         this.creerFenetre();
     }
 
+    /**
+     * Méthode qui crée la fenêtre graphique de menu.
+     */
     public void creerFenetre(){
         mainWindow = new Stage();
         //Ajouter un titre
